@@ -1,35 +1,35 @@
 ---
-title: "Analiza i predykcja wieku w zale¿noœci od czynników wp³ywaj¹cych na kondycje serca"
-author: "Ewa Bojke, Jaros³aw Kuczyñski"
+title: "Analiza i predykcja wieku w zaleÅ¼noÅ›ci od czynnikÃ³w wpÅ‚ywajÄ…cych na kondycje serca"
+author: "Ewa Bojke"
 date: "25 stycznia 2020"
 output: html_document
 ---
 
-#Zbiór danych
+#ZbiÃ³r danych
 
 \newline
-W naszym projekcie bêdziemy u¿ywali danych ze strony https://kaggle.com.
+W naszym projekcie bÄ™dziemy uÅ¼ywali danych ze strony https://kaggle.com.
 \newline
-Ta baza danych zawiera 76 atrybutów, ale wszystkie opublikowane eksperymenty odnosz¹ siê do korzystania z podzbioru 14 z nich. W szczególnoœci baza danych Cleveland jest jedyn¹, z której do tej pory korzystali naukowcy ML.  
+Ta baza danych zawiera 76 atrybutÃ³w, ale wszystkie opublikowane eksperymenty odnoszÄ… siÄ™ do korzystania z podzbioru 14 z nich. W szczegÃ³lnoÅ›ci baza danych Cleveland jest jedynÄ…, z ktÃ³rej do tej pory korzystali naukowcy ML.  
 
 **Zmiennne**
 
 zmienna       opis
 --------      ----
 `age`          wiek
-`sex`          p³eæ
-`cp`           indykator bólu w klatce piersiowej(od 0 do 1 wartoœci)
-`trestbps`     spoczynkowe ciœnienie krwi
+`sex`          pÅ‚eÄ‡
+`cp`           indykator bÃ³lu w klatce piersiowej(od 0 do 1 wartoÅ›ci)
+`trestbps`     spoczynkowe ciÅ›nienie krwi
 `chol`         surowica cholestoral w mg / dl
 `fbs`          indykator czy cukier na czczo(0=nie, 1=tak)  
-`restecg`      indykator spoczynkowych wyników elektrokar(0,1)
-`thalach`      maksymalne osi¹gniête têtno
-`exang`        indykator dusznicy bolesnej wywo³anej wysi³kiem                          fizycznym(0=nie,1=tak)
-`oldpeak`      depresja ST wywo³ana wysi³kiem w stosunku do odpoczynku
+`restecg`      indykator spoczynkowych wynikÃ³w elektrokar(0,1)
+`thalach`      maksymalne osiÄ…gniÄ™te tÄ™tno
+`exang`        indykator dusznicy bolesnej wywoÅ‚anej wysiÅ‚kiem                          fizycznym(0=nie,1=tak)
+`oldpeak`      depresja ST wywoÅ‚ana wysiÅ‚kiem w stosunku do odpoczynku
 
       
 \newline 
-**Sformu³owanie problemu badawczego oraz agenda do zadañ **\newline
+**SformuÅ‚owanie problemu badawczego oraz agenda do zadaÅ„ **\newline
 \newline
 
 W naszym projekcie 
@@ -38,9 +38,9 @@ W naszym projekcie
 
 - przygotujemy dane do interpretacji tzw. czyszczenie danych i ich          wczytanie
 
-- przeanalizujemy zmienne i zale¿noœci miêdzy nimi tzw. eksploracyjna       analiza danych\newline
+- przeanalizujemy zmienne i zaleÅ¼noÅ›ci miÄ™dzy nimi tzw. eksploracyjna       analiza danych\newline
 
-- stworzymy model predykcyjny wieku osób chorych \newline
+- stworzymy model predykcyjny wieku osÃ³b chorych \newline
 
 - sprawdzimy jaki model najbardziej pasuje do danych
 
@@ -64,7 +64,7 @@ heart <- heart %>% mutate(plec = factor(plec, levels = c(man=0, woman = 1), labe
 
 Wnioski i obserwacje:
 
-Zamieniliœmy zmienne numeryczne plec, cukier, dusznica, bol, spo.wyn na zmienne kategoryczne. U¿yjemy ich do analizy wariancji w kolejnych etapach projektu.
+ZamieniliÅ›my zmienne numeryczne plec, cukier, dusznica, bol, spo.wyn na zmienne kategoryczne. UÅ¼yjemy ich do analizy wariancji w kolejnych etapach projektu.
 
 #Podstawowe statystyki dla zmiennych w naszym zbiorze danych
 
@@ -73,19 +73,19 @@ lapply(heart,summary)
 ```
 Wnioski i obserwacje:
 
-Mo¿emy zaobserwowaæ, ¿e wiek badanych ludzi waha siê od 29 do 77 lat.
-Przy czym po³owa ludzi ma wiek w przedziale 47.5 - 61 lat z
-median¹ 55 lat. W badaniach mamy wiêcej kobiet ni¿ mê¿czyzn.
+MoÅ¼emy zaobserwowaÄ‡, Å¼e wiek badanych ludzi waha siÄ™ od 29 do 77 lat.
+Przy czym poÅ‚owa ludzi ma wiek w przedziale 47.5 - 61 lat z
+medianÄ… 55 lat. W badaniach mamy wiÄ™cej kobiet niÅ¼ mÄ™Å¼czyzn.
 
-Jeœli chodzi o ciœnienie skurczowe  krwi, to mo¿emy zauwa¿yæ, ¿e wahania wystêpuj¹ miêdzy 94mm a 200mm. Wiêksza czêœæ badanych ma wyniki ciœnienia skurczowego miêdzy 120 a 140mm z median¹ 130mm. Ogólnie O nadciœnieniu mówimy ju¿ w momencie, gdy ciœnienie skurczowe przekracza 140 mm .
+JeÅ›li chodzi o ciÅ›nienie skurczowe  krwi, to moÅ¼emy zauwaÅ¼yÄ‡, Å¼e wahania wystÄ™pujÄ… miÄ™dzy 94mm a 200mm. WiÄ™ksza czÄ™Å›Ä‡ badanych ma wyniki ciÅ›nienia skurczowego miÄ™dzy 120 a 140mm z medianÄ… 130mm. OgÃ³lnie O nadciÅ›nieniu mÃ³wimy juÅ¼ w momencie, gdy ciÅ›nienie skurczowe przekracza 140 mm .
 
-Natomiast wyniki cholesterolu u zdrowego cz³owieka nie powinny przekraczaæ 190mg. W naszych danych wahania wystêpuj¹ miêdzy 126mg a 409mg. Wiêkszoœæ badanych ma wyniki w przedziale 211 mg - 274.5mg. 
+Natomiast wyniki cholesterolu u zdrowego czÅ‚owieka nie powinny przekraczaÄ‡ 190mg. W naszych danych wahania wystÄ™pujÄ… miÄ™dzy 126mg a 409mg. WiÄ™kszoÅ›Ä‡ badanych ma wyniki w przedziale 211 mg - 274.5mg. 
 
-Ostatni¹ zmienn¹, któr¹ zbadamy to têtno. Wahania wystêpuj¹ miêdzy 71 a 202 uderzeñ serca na minutê. Wiêksza czêœæ osób ma têtno w  przedziale (134,166) z median¹ równ¹ 153. Wynikiem zagra¿aj¹cym zdrowiu jest przekroczenie 100 uderzeñ serca na minutê.
+OstatniÄ… zmiennÄ…, ktÃ³rÄ… zbadamy to tÄ™tno. Wahania wystÄ™pujÄ… miÄ™dzy 71 a 202 uderzeÅ„ serca na minutÄ™. WiÄ™ksza czÄ™Å›Ä‡ osÃ³b ma tÄ™tno w  przedziale (134,166) z medianÄ… rÃ³wnÄ… 153. Wynikiem zagraÅ¼ajÄ…cym zdrowiu jest przekroczenie 100 uderzeÅ„ serca na minutÄ™.
 
 
 
-#Korelacje miêdzy zmiennymi
+#Korelacje miÄ™dzy zmiennymi
 ```{r}
 cor(heart$cisnienie,heart$cholesterol)
 cor(heart$cisnienie,heart$`max tetno`)
@@ -98,9 +98,9 @@ cor(heart$`max tetno`,heart$`depresja ST`)
 
 Wnioski i obserwacje:
 
-Wiêkszoœæ zmiennych nie jest skorelowana. Jedynie mamy wiêksz¹ korelacjê przy zmiennych ciœnienie i depresja ST, przy zmiennych ciœnienie i cholesterol oraz przy zmiennych max tetno i depresja ST. Korelacja wynosi odpowiednio oko³o 0.2, 0.14 i -0.34.
+WiÄ™kszoÅ›Ä‡ zmiennych nie jest skorelowana. Jedynie mamy wiÄ™kszÄ… korelacjÄ™ przy zmiennych ciÅ›nienie i depresja ST, przy zmiennych ciÅ›nienie i cholesterol oraz przy zmiennych max tetno i depresja ST. Korelacja wynosi odpowiednio okoÅ‚o 0.2, 0.14 i -0.34.
 
-#Przyk³adowe zale¿noœci miêdzy zmiennymi i modele liniowe dla zmiennych
+#PrzykÅ‚adowe zaleÅ¼noÅ›ci miÄ™dzy zmiennymi i modele liniowe dla zmiennych
 
 ```{r}
 mod1=lm(heart$cholesterol~heart$cisnienie)
@@ -134,11 +134,11 @@ abline(mod6,lwd=4,col='red')
 
 Wnioski i obserwacje:
 
-Widzimy,¿e jest zale¿noœæ miêdzy zmiennymi, ale bardzo ma³a.
-Najwiêksz¹ zale¿noœæ mo¿emy zauwa¿yæ miêdzy zmiennymi depresja ST i max tetno.
+Widzimy,Å¼e jest zaleÅ¼noÅ›Ä‡ miÄ™dzy zmiennymi, ale bardzo maÅ‚a.
+NajwiÄ™kszÄ… zaleÅ¼noÅ›Ä‡ moÅ¼emy zauwaÅ¼yÄ‡ miÄ™dzy zmiennymi depresja ST i max tetno.
 
 \newpage
-#Badanie zale¿noœci
+#Badanie zaleÅ¼noÅ›ci
 ```{r}
 summary(mod1)
 summary(mod2)
@@ -150,14 +150,14 @@ summary(mod6)
 
 Wnioski i obserwacje:
 
-Jak widaæ wiêkszoœæ zmiennych jest s³abo zale¿ne i  s¹ s³abo skorelowane.
-Jedynie w ostanim modelu widzimy pewn¹ zale¿noœæ. B³¹d standardowy reszt wynosi w tym przypadku tylko 1.141. Mod6 wyjaœnia oko³o 11.5% wariancji depresji ST bior¹c pod uwagê maksymalne têtno.
+Jak widaÄ‡ wiÄ™kszoÅ›Ä‡ zmiennych jest sÅ‚abo zaleÅ¼ne i  sÄ… sÅ‚abo skorelowane.
+Jedynie w ostanim modelu widzimy pewnÄ… zaleÅ¼noÅ›Ä‡. BÅ‚Ä…d standardowy reszt wynosi w tym przypadku tylko 1.141. Mod6 wyjaÅ›nia okoÅ‚o 11.5% wariancji depresji ST biorÄ…c pod uwagÄ™ maksymalne tÄ™tno.
 
 
 #Modele w regresji wieloliniowej
 
-Regresja wieloliniowa jest to wyjaœnianie wartoœci zmiennej zale¿nej za pomoc¹ wiêcej ni¿ jednego predyktora. 
-Stworzymy model nie bior¹cy pod uwagê zale¿noœci pomiêdzy zmiennymi 
+Regresja wieloliniowa jest to wyjaÅ›nianie wartoÅ›ci zmiennej zaleÅ¼nej za pomocÄ… wiÄ™cej niÅ¼ jednego predyktora. 
+Stworzymy model nie biorÄ…cy pod uwagÄ™ zaleÅ¼noÅ›ci pomiÄ™dzy zmiennymi 
 
 ```{r}
 model = lm(heart$wiek~+cholesterol+`max tetno`+cisnienie, heart)
@@ -166,16 +166,16 @@ summary(model)
 
 Wnioski i obserwacje:
 
-Ka¿dy wzrost o 1 mg cholesterolu sprawia, ¿e œrednia wartoœæ wieku   bêdzie wzrasta³a o 0.03 lat, czyli nieca³e 11 dni.(zak³adaj¹c, ¿e pozosta³e zmienne siê nie zmieniaj¹)
+KaÅ¼dy wzrost o 1 mg cholesterolu sprawia, Å¼e Å›rednia wartoÅ›Ä‡ wieku   bÄ™dzie wzrastaÅ‚a o 0.03 lat, czyli niecaÅ‚e 11 dni.(zakÅ‚adajÄ…c, Å¼e pozostaÅ‚e zmienne siÄ™ nie zmieniajÄ…)
 
-Ka¿dy wzrost o 1mm ciœnienia krwi sprawia, ¿e œrednia wartoœæ wieku bêdzie wzrasta³a o 0.12 lat, czyli nieca³e 44 dni.(zak³adaj¹c, ¿e pozosta³e zmienne siê nie zmieniaj¹)
+KaÅ¼dy wzrost o 1mm ciÅ›nienia krwi sprawia, Å¼e Å›rednia wartoÅ›Ä‡ wieku bÄ™dzie wzrastaÅ‚a o 0.12 lat, czyli niecaÅ‚e 44 dni.(zakÅ‚adajÄ…c, Å¼e pozostaÅ‚e zmienne siÄ™ nie zmieniajÄ…)
 
-Ka¿dy wzrost o 1 uderzenie serca na minutê sprawia, ¿e œrednia wartoœæ wieku bêdzie mala³a o 0.15lat, czyli nieca³e 54 dni.(zak³adaj¹c, ¿e pozosta³e zmienne siê nie zmieniaj¹)
+KaÅ¼dy wzrost o 1 uderzenie serca na minutÄ™ sprawia, Å¼e Å›rednia wartoÅ›Ä‡ wieku bÄ™dzie malaÅ‚a o 0.15lat, czyli niecaÅ‚e 54 dni.(zakÅ‚adajÄ…c, Å¼e pozostaÅ‚e zmienne siÄ™ nie zmieniajÄ…)
 
-Wspó³czynnik determinacji wynosi 0.2464. Natomiast b³¹d standardowy reszt 7.884. Model wyjaœnia 24% wariancji wieku. W wiêkszoœci wyników mamy tak¹ sytuacjê, ¿e osoby maj¹ce coraz s³absz¹ kondycjê serca s¹ starsze. Je¿eli osoby badane maj¹ podwy¿szone têtno to wyst¹pi to przewa¿nie w m³odszym wieku. 
+WspÃ³Å‚czynnik determinacji wynosi 0.2464. Natomiast bÅ‚Ä…d standardowy reszt 7.884. Model wyjaÅ›nia 24% wariancji wieku. W wiÄ™kszoÅ›ci wynikÃ³w mamy takÄ… sytuacjÄ™, Å¼e osoby majÄ…ce coraz sÅ‚abszÄ… kondycjÄ™ serca sÄ… starsze. JeÅ¼eli osoby badane majÄ… podwyÅ¼szone tÄ™tno to wystÄ…pi to przewaÅ¼nie w mÅ‚odszym wieku. 
  
 
-Dodajemy zmienn¹ depresja ST i tworzymy model.
+Dodajemy zmiennÄ… depresja ST i tworzymy model.
 ```{r}
 model2ST = lm(heart$wiek~+cholesterol+`max tetno`+cisnienie+`depresja ST`, heart)
 summary(model2ST)
@@ -183,9 +183,9 @@ summary(model2ST)
 
 Wnioski i obserwacje:
 
-Tak jak wczeœniej widzimy przewa¿nie œredni wzrost zmiennej wiek. Zauwa¿my ¿e nowa zmienna zmniejszy³a wspó³czynnik determinacji, który teraz wynosi  0.2445 i zwiêkszy³a b³¹d standardowy reszt, który teraz wynosi 7.894. Mo¿emy powiedzieæ, ¿e ten model nie jest lepszy od poprzedniego. Depresja ST jest skorelowana z ciœnieniem i z max tetno i dlatego model zbytnio siê nie ró¿ni chocia¿ b³¹d standardowy reszt jest wiêkszy. Informacje, które s¹ przechowywane w zmiennej ciœnienie i max tetno zawiera równie¿ zmienna z nimi skorelowana depresja ST.
+Tak jak wczeÅ›niej widzimy przewaÅ¼nie Å›redni wzrost zmiennej wiek. ZauwaÅ¼my Å¼e nowa zmienna zmniejszyÅ‚a wspÃ³Å‚czynnik determinacji, ktÃ³ry teraz wynosi  0.2445 i zwiÄ™kszyÅ‚a bÅ‚Ä…d standardowy reszt, ktÃ³ry teraz wynosi 7.894. MoÅ¼emy powiedzieÄ‡, Å¼e ten model nie jest lepszy od poprzedniego. Depresja ST jest skorelowana z ciÅ›nieniem i z max tetno i dlatego model zbytnio siÄ™ nie rÃ³Å¼ni chociaÅ¼ bÅ‚Ä…d standardowy reszt jest wiÄ™kszy. Informacje, ktÃ³re sÄ… przechowywane w zmiennej ciÅ›nienie i max tetno zawiera rÃ³wnieÅ¼ zmienna z nimi skorelowana depresja ST.
 
-#Model nie bior¹cy pod uwagê zale¿noœci pomiêdzy wszystkimi zmiennymi
+#Model nie biorÄ…cy pod uwagÄ™ zaleÅ¼noÅ›ci pomiÄ™dzy wszystkimi zmiennymi
 ```{r}
 model.model= lm(heart$wiek~`max tetno`+cholesterol, heart)
 summary(model.model)
@@ -193,18 +193,18 @@ summary(model.model)
 
 Wnioski i obserwacje:
 
-B³¹d standardowy reszt jest mniejszy w pierwszym modelu o nazwie "model" i wynosi 7.884 lat, natomiast w modelu "model.model" b³¹d standardowy reszt wynosi 8.159 lat i wspó³czynnik determinacji jest sporo mniejszy w drugim modelu. Mo¿emy stwierdziæ, ¿e model o nazwie "model.model" nie jest lepszy. Szukamy dalej bardziej dopasowanego modelu do naszych danych. 
+BÅ‚Ä…d standardowy reszt jest mniejszy w pierwszym modelu o nazwie "model" i wynosi 7.884 lat, natomiast w modelu "model.model" bÅ‚Ä…d standardowy reszt wynosi 8.159 lat i wspÃ³Å‚czynnik determinacji jest sporo mniejszy w drugim modelu. MoÅ¼emy stwierdziÄ‡, Å¼e model o nazwie "model.model" nie jest lepszy. Szukamy dalej bardziej dopasowanego modelu do naszych danych. 
 
 #Analiza wariancji
 
-Mo¿emy staraæ siê przewidywaæ wartoœæ zmiennej wiek za pomoc¹ zmiennej
-cukier. Mo¿e doprowadziæ nas to do pewnych wniosków, np takich ,¿e im cz³owiek jest starszy tym jego podatnoœæ na cukrzyce wzrasta. 
+MoÅ¼emy staraÄ‡ siÄ™ przewidywaÄ‡ wartoÅ›Ä‡ zmiennej wiek za pomocÄ… zmiennej
+cukier. MoÅ¼e doprowadziÄ‡ nas to do pewnych wnioskÃ³w, np takich ,Å¼e im czÅ‚owiek jest starszy tym jego podatnoÅ›Ä‡ na cukrzyce wzrasta. 
 
-Zwróæmy jednak uwagê na istotn¹ ró¿nicê w stosunku do regresji prostej. Mianowicie, zmienna cukier nie jest liczbowa. W takiej sytuacji, gdy zmienn¹ numeryczn¹ przewidujemy za pomoc¹ zmiennej kategorycznej, mówimy, ¿e mamy do czynienia z analiz¹ wariancji(ANOVA).
+ZwrÃ³Ä‡my jednak uwagÄ™ na istotnÄ… rÃ³Å¼nicÄ™ w stosunku do regresji prostej. Mianowicie, zmienna cukier nie jest liczbowa. W takiej sytuacji, gdy zmiennÄ… numerycznÄ… przewidujemy za pomocÄ… zmiennej kategorycznej, mÃ³wimy, Å¼e mamy do czynienia z analizÄ… wariancji(ANOVA).
 
 Hipoteza Ho:
 
-Model i model.model nie ró¿ni¹ siê statystycznie.
+Model i model.model nie rÃ³Å¼niÄ… siÄ™ statystycznie.
 ```{r}
 model1 = lm(heart$wiek~cholesterol+`max tetno`+cisnienie, heart)
 model.model1 = lm(heart$wiek~cholesterol*`max tetno`*cisnienie, heart)
@@ -214,16 +214,16 @@ anova(model1,model.model1)
 
 Wnioski i obserwacje:
 
-P-value jest ma³e wiêc nie akceptujemy hipotezy Ho.
+P-value jest maÅ‚e wiÄ™c nie akceptujemy hipotezy Ho.
 
 #Analiza kowariancji
 
-Zmienn¹ numeryczn¹ mo¿emy wyjaœniaæ za pomoc¹ innej zmiennej
-numerycznej i zmiennej kategorycznej jednoczeœnie.
+ZmiennÄ… numerycznÄ… moÅ¼emy wyjaÅ›niaÄ‡ za pomocÄ… innej zmiennej
+numerycznej i zmiennej kategorycznej jednoczeÅ›nie.
 
 Jakie mamy predyktory?
 
-Jednym z dobrych predyktorów wieku osoby jest cisnienie. Rzecz jasna, ¿e osoby  starsze maj¹ wiêksze ciœnienie ni¿ osoby m³odsze.
+Jednym z dobrych predyktorÃ³w wieku osoby jest cisnienie. Rzecz jasna, Å¼e osoby  starsze majÄ… wiÄ™ksze ciÅ›nienie niÅ¼ osoby mÅ‚odsze.
 
 
 ```{r}
@@ -236,7 +236,7 @@ summarise(correlation = cor(cisnienie, wiek))
 
 Wnioski i obserwacje:
 
-Widzimy, ¿e wspó³czynnik korelacji jest istotny i wynosi oko³o 0.3, jednak¿e nie jest bardzo du¿y, co sugeruje, ¿e na wiek wp³ywaj¹ równie¿ inne czynniki.
+Widzimy, Å¼e wspÃ³Å‚czynnik korelacji jest istotny i wynosi okoÅ‚o 0.3, jednakÅ¼e nie jest bardzo duÅ¼y, co sugeruje, Å¼e na wiek wpÅ‚ywajÄ… rÃ³wnieÅ¼ inne czynniki.
 
 
 # Korelacje wieku z innymi zmiennymi numerycznymi
@@ -249,9 +249,9 @@ ggpairs(heart %>% select_if(is.numeric))
 
 Wnioski i obserwacje:
 
-Mo¿emy zauwa¿yæ, ¿e dobrym predyktorem jest równie¿ cholesterol (wspó³czynnik korelacji ponad 0.2), depresja ST (wspo³czynik korelacji 0.21) i max tetno (wspolczynnik oko³o -0.4).
+MoÅ¼emy zauwaÅ¼yÄ‡, Å¼e dobrym predyktorem jest rÃ³wnieÅ¼ cholesterol (wspÃ³Å‚czynnik korelacji ponad 0.2), depresja ST (wspoÅ‚czynik korelacji 0.21) i max tetno (wspolczynnik okoÅ‚o -0.4).
 
-#Dwa modele liniowe i i ich porównanie
+#Dwa modele liniowe i i ich porÃ³wnanie
 ```{r}
 model.cisnienie<-lm(wiek~cisnienie,heart)
 model.cukier<-lm(wiek~cukier,heart)
@@ -264,10 +264,10 @@ summary(model.cs)
 
 Wnioski i obserwacje:
 
-Jak mo¿na by³o oczekiwaæ model zawieraj¹cy dwie zmienne niezale¿ne jest
-lepiej dopasowany od modeli z pojedynczymi zmiennymi. Wspó³czynnik determinacji w modelu z dwoma zmiennymi niezale¿nymi wynosi oko³o 8%. W modelach z pojedyñcz¹ zmienn¹ du¿o mniej.
+Jak moÅ¼na byÅ‚o oczekiwaÄ‡ model zawierajÄ…cy dwie zmienne niezaleÅ¼ne jest
+lepiej dopasowany od modeli z pojedynczymi zmiennymi. WspÃ³Å‚czynnik determinacji w modelu z dwoma zmiennymi niezaleÅ¼nymi wynosi okoÅ‚o 8%. W modelach z pojedyÅ„czÄ… zmiennÄ… duÅ¼o mniej.
 
-#Jaki procent wariancji wyjaœnia model?
+#Jaki procent wariancji wyjaÅ›nia model?
 
 ```{r}
 ggplot(heart %>% filter(!is.na(cukier)), aes(x = cukier, y = wiek)) +
@@ -276,19 +276,19 @@ geom_boxplot(notch = TRUE)
 
 Wnioski i obserwacje:
 
-Model z dwoma zmiennymi wyjaœnia oko³o 8% wariancji wieku osoby badanej. Widzimy, ¿e to czy ktoœ jest cukrzykiem czy nie zale¿y od wieku.
+Model z dwoma zmiennymi wyjaÅ›nia okoÅ‚o 8% wariancji wieku osoby badanej. Widzimy, Å¼e to czy ktoÅ› jest cukrzykiem czy nie zaleÅ¼y od wieku.
 
 
-#Model o najwiêkszej zdolnoœci predykcji
+#Model o najwiÄ™kszej zdolnoÅ›ci predykcji
 
-Za³o¿enia: Staramy siê, by model by³ jak najprostszy, gdy¿ nie
-zale¿y nam by dopasowa³ siê za dobrze do naszych danych.
+ZaÅ‚oÅ¼enia: Staramy siÄ™, by model byÅ‚ jak najprostszy, gdyÅ¼ nie
+zaleÅ¼y nam by dopasowaÅ‚ siÄ™ za dobrze do naszych danych.
 
-Jednym z typowych kryteriów u¿ywanych do wyboru modelu jest zmodyfikowany wspó³czynnik determinacji. Zawiera on w sobie
-informacjê o liczbie parametrów. Nie zawsze roœnie przy bardziej skomplikowanych modelach. Lepsz¹ metod¹ jest tzw. kryterium
-informacyjne. AIC sprawdza siê dobrze w modelach predykcyjnych.
+Jednym z typowych kryteriÃ³w uÅ¼ywanych do wyboru modelu jest zmodyfikowany wspÃ³Å‚czynnik determinacji. Zawiera on w sobie
+informacjÄ™ o liczbie parametrÃ³w. Nie zawsze roÅ›nie przy bardziej skomplikowanych modelach. LepszÄ… metodÄ… jest tzw. kryterium
+informacyjne. AIC sprawdza siÄ™ dobrze w modelach predykcyjnych.
 
-Rozwa¿ymy pe³ny model, z wszystkimi mo¿liwymi interakcjami.
+RozwaÅ¼ymy peÅ‚ny model, z wszystkimi moÅ¼liwymi interakcjami.
 
 
 ```{r}
@@ -298,10 +298,10 @@ summary(model.full)
 
 Wnioski i obserwacje:
 
-Wiêkszoœæ zmiennych jest nieistotna statystycznie. Jest tak dlatego, ¿e informacja zosta³a podzielona pomiêdzy mnóstwo predyktorów i interakcji pomiêdzy nimi.
+WiÄ™kszoÅ›Ä‡ zmiennych jest nieistotna statystycznie. Jest tak dlatego, Å¼e informacja zostaÅ‚a podzielona pomiÄ™dzy mnÃ³stwo predyktorÃ³w i interakcji pomiÄ™dzy nimi.
 
-Stwórzmy sensowniejszy model.
-Dodajemy wszystkie dostêpne zmienne. A zw³aszcza zmienn¹ cisnienie, zmienn¹ max tetno i zmienn¹ cholesterol. S¹ one najbardziej skorelowane ze zmienn¹ wiek.
+StwÃ³rzmy sensowniejszy model.
+Dodajemy wszystkie dostÄ™pne zmienne. A zwÅ‚aszcza zmiennÄ… cisnienie, zmiennÄ… max tetno i zmiennÄ… cholesterol. SÄ… one najbardziej skorelowane ze zmiennÄ… wiek.
 
 ```{r}
 model.zlozony <-lm(wiek~cholesterol+cisnienie+spo.wyn+`depresja ST`+`max tetno`+bol+dusznica+cukier:cisnienie,na.omit(heart))
@@ -311,14 +311,14 @@ summary(model.zlozony)
 ```
 
 
-Uproœæmy teraz model przy u¿yciu AIC.
+UproÅ›Ä‡my teraz model przy uÅ¼yciu AIC.
 ```{r}
 model.zlozony.aic <- step(model.zlozony)
 ```
 
 Wnioski i obserwacje:
 
-Jak widzimy aby model by³ dok³adniejszy wymagane by³o usuniêcie zmiennych depresja ST, cukier i spo.wyn. Ponadto wybrany model okaza³ siê mieæ ni¿sze AIC ni¿ model pe³ny.
+Jak widzimy aby model byÅ‚ dokÅ‚adniejszy wymagane byÅ‚o usuniÄ™cie zmiennych depresja ST, cukier i spo.wyn. Ponadto wybrany model okazaÅ‚ siÄ™ mieÄ‡ niÅ¼sze AIC niÅ¼ model peÅ‚ny.
 
 ```{r}
 extractAIC(model.full)
@@ -327,19 +327,19 @@ extractAIC(model.zlozony.aic)
 
 Wnioski i obserwacje:
 
-ZnaleŸliœmy najlepiej dopasowany model do naszych danych. Jest to model.zlozony.aic.
+ZnaleÅºliÅ›my najlepiej dopasowany model do naszych danych. Jest to model.zlozony.aic.
 
 #Wykresy diagnostyczne najlepszego modelu
 
-Pierwszy wykres przedstawia reszty wykreœlone wglêdem wartoœci dopasowanych. Punkty powinny byæ równomiernie rozrzucone wzglêdem osi `x`. Czerwona linia (wyg³adzenie) wskazuje na lekkie niedopasowane modelu dla mniejszych wartoœci. 
+Pierwszy wykres przedstawia reszty wykreÅ›lone wglÄ™dem wartoÅ›ci dopasowanych. Punkty powinny byÄ‡ rÃ³wnomiernie rozrzucone wzglÄ™dem osi `x`. Czerwona linia (wygÅ‚adzenie) wskazuje na lekkie niedopasowane modelu dla mniejszych wartoÅ›ci. 
 
-Drugim wykresem jest wykres kwantyl-kwantyl standaryzowanych reszt. Reszty standaryzowane, s¹ to reszty podzielone przez odchylenie standardowe:
+Drugim wykresem jest wykres kwantyl-kwantyl standaryzowanych reszt. Reszty standaryzowane, sÄ… to reszty podzielone przez odchylenie standardowe:
 $$t_i = \frac{e_i}{s \sqrt{1 - h_{ii}} }$$
-Wykres kwantyl-kwantyl powinien przypominaæ liniê prost¹. Tutaj widzimy pewne niedopasowanie w przypadku bardziej ekstremalnych obserwacji. 
+Wykres kwantyl-kwantyl powinien przypominaÄ‡ liniÄ™ prostÄ…. Tutaj widzimy pewne niedopasowanie w przypadku bardziej ekstremalnych obserwacji. 
 
-Trzeci wykres jest wygodny do badania homoskedastycznoœci (czerwona krzywa powinna byæ jak najbardziej pozioma).
+Trzeci wykres jest wygodny do badania homoskedastycznoÅ›ci (czerwona krzywa powinna byÄ‡ jak najbardziej pozioma).
 
-Czwarty wykres s³u¿y do badania, które obserwacje s¹ wp³ywowe. Uwidoczniona jest na nim odleg³oœæ Cooka, która bada ró¿nicê predykcji modelu wyjœciowego z modelem po usuniêciu obserwacji. Mo¿na udowodniæ, ¿e wyra¿a siê ona wzorem
+Czwarty wykres sÅ‚uÅ¼y do badania, ktÃ³re obserwacje sÄ… wpÅ‚ywowe. Uwidoczniona jest na nim odlegÅ‚oÅ›Ä‡ Cooka, ktÃ³ra bada rÃ³Å¼nicÄ™ predykcji modelu wyjÅ›ciowego z modelem po usuniÄ™ciu obserwacji. MoÅ¼na udowodniÄ‡, Å¼e wyraÅ¼a siÄ™ ona wzorem
 $$C_i = e_i \left( \frac{n-p}{p} \cdot\frac{h_{ii}}{1 - h_{ii}} \right)^{1/2} $$
 
 ```{r}
